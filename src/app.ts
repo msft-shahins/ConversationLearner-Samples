@@ -92,7 +92,7 @@ cl.EntityDetectionCallback(async (text: string, memoryManager: ClientMemoryManag
 //=================================
 // Define any API callbacks
 //=================================
-/*
+
 cl.AddCallback<number>({
     name: "Add",
     logic: async (memoryManager, arg1: string, arg2: string) => {
@@ -102,7 +102,7 @@ cl.AddCallback<number>({
     },
     render: async result => `Add result is: ${result}`
 })
-*/
+
 
 //=================================
 // Handle Incoming Messages
