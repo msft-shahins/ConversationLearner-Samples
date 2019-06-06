@@ -71,7 +71,9 @@ jobs:
       # Run smoke tests against sample
       - run: npx wait-on -- http://localhost:3978
       - run: cd ../ui && npm run cypress -- run --record false --spec  "cypress/integration/smoke/**/*.spec.*" --config "baseUrl=http://localhost:3978/ui"
-      - run: cd ../ui && npm run cypress -- run --record false --spec  "cypress/integration/release/**/*.spec.*" --config "baseUrl=http://localhost:3978"
+      - run: 
+          command: cd ../ui && npm run cypress -- run --record false --spec  "cypress/integration/release/**/*.spec.*" --config "baseUrl=http://localhost:3978"
+          when: always
 
       - store_artifacts:
           path: ../ui/cypress/videos
