@@ -57,20 +57,19 @@ jobs:
             - ~/.npm
             - ~/.cache
 
-      # Clone the Samples BOT
+      # Clone the UI to access tests
       - run: git clone https://github.com/microsoft/ConversationLearner-UI -b mattm/smoke-test ../ui
-      
-      # Install and build sample Bot application
       - run: cd ../ui && npm ci
 
       # Run the sample
       - run: 
-          command: npm start > start.txt
+          command: npm run test-ApiCallbacks > start.txt
           background: true
 
       # Run smoke tests against sample
       - run: npx wait-on -- http://localhost:3978
       - run: cd ../ui && npm run cypress -- run --record false --spec  "cypress/integration/smoke/**/*.spec.*" --config "baseUrl=http://localhost:3978/ui"
+      - run: cd ../ui && npm run cypress -- run --record false --spec  "cypress/integration/release/**/*.spec.*" --config "baseUrl=http://localhost:3978"
 
       - store_artifacts:
           path: ../ui/cypress/videos
