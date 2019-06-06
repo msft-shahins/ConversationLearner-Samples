@@ -65,7 +65,7 @@ jobs:
 
       # Run the sample
       - run: 
-          command: npm run test-ApiCallbacks > start.txt
+          command: npm run test-apicallbacks > start.txt
           background: true
 
       # Run smoke tests against sample

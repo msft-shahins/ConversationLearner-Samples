@@ -10,52 +10,35 @@ import chalk from 'chalk'
 import config from '../config'
 import getDolRouter from '../dol'
 
-//===================
-// Create Bot server
-//===================
 const server = express()
 
+const { bfAppId, bfAppPassword, modelId, ...clOptions } = config
+const adapter = new botBuilder.BotFrameworkAdapter({ appId: bfAppId, appPassword: bfAppPassword });
+let fileStorage = new FileStorage(path.join(__dirname, 'storage'))
+const sdkRouter = ConversationLearner.Init(clOptions, fileStorage)
 const isDevelopment = process.env.NODE_ENV === 'development'
 if (isDevelopment) {
     console.log(chalk.yellowBright(`Adding /directline routes`))
     server.use(getDolRouter(config.botPort))
-    
+
+    console.log(chalk.cyanBright(`Adding /sdk routes`))
+    server.use('/sdk', sdkRouter)
+
     console.log(chalk.greenBright(`Adding /ui routes`))
     server.use(uiRouter)
 }
 
+// Serve default bot summary page. Should be customized by customer.
+server.use(express.static(path.join(__dirname, '..', '..', 'site')))
+
 server.listen(config.botPort, () => {
-    console.log(`Server listening to port: ${config.botPort}`)
+    console.log(`Server listening at: http://localhost:${config.botPort}`)
 })
 
-const { bfAppId, bfAppPassword, modelId, ...clOptions } = config
-
-//==================
-// Create Adapter
-//==================
-const adapter = new botBuilder.BotFrameworkAdapter({ appId: bfAppId, appPassword: bfAppPassword });
-
-//==================================
-// Storage 
-//==================================
-// Initialize ConversationLearner using file storage.  
-// Recommended only for development
-// See "storageDemo.ts" for other storage options
-let fileStorage = new FileStorage(path.join(__dirname, 'storage'))
-
-//==================================
-// Initialize Conversation Learner
-//==================================
-
-const sdkRouter = ConversationLearner.Init(clOptions, fileStorage)
-if (isDevelopment) {
-    console.log(chalk.cyanBright(`Adding /sdk routes`))
-    server.use('/sdk', sdkRouter)
-}
-let cl = new ConversationLearner(modelId);
+const cl = new ConversationLearner(modelId);
 
 //=========================================================
-// Bots Buisness Logic
+// Bots Business Logic
 //=========================================================
 
 var inStock = ["cheese", "sausage", "mushrooms", "olives", "peppers"];
