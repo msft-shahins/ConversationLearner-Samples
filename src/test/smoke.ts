@@ -8,14 +8,18 @@ import { BotFrameworkAdapter } from 'botbuilder'
 import { ConversationLearner, FileStorage, uiRouter } from '@conversationlearner/sdk'
 import chalk from 'chalk'
 import config from '../config'
+import getDolRouter from '../dol'
 
 const server = express()
 const { bfAppId, bfAppPassword, modelId, ...clOptions } = config
 const adapter = new BotFrameworkAdapter({ appId: bfAppId, appPassword: bfAppPassword });
 const fileStorage = new FileStorage(path.join(__dirname, 'storage'))
 const sdkRouter = ConversationLearner.Init(clOptions, fileStorage)
-const includeSdk = ['development', 'test'].includes(process.env.NODE_ENV || '')
-if (includeSdk) {
+const isDevelopment = process.env.NODE_ENV === 'development'
+if (isDevelopment) {
+    console.log(chalk.yellowBright(`Adding /directline routes`))
+    server.use(getDolRouter(config.botPort))
+
     console.log(chalk.cyanBright(`Adding /sdk routes`))
     server.use('/sdk', sdkRouter)
 
@@ -48,4 +52,6 @@ server.post('/api/messages', (req, res) => {
     })
 })
 
-export default server
+server.listen(config.botPort, () => {
+    console.log(`Server listening at: http://localhost:${config.botPort}`)
+})
