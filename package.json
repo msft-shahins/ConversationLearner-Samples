@@ -21,14 +21,13 @@
     "demo-pizza": "node ./lib/demos/demoPizzaOrder.js",
     "demo-storage": "node ./lib/demos/demoStorage.js",
     "demo-vrapp": "node ./lib/demos/demoVRAppLauncher.js",
-    "test-ApiCallbacks": "node ./lib/demos/testApiCallbacks.js",
+    "test-ApiCallbacks": "node ./lib/test/testApiCallbacks.js",
     "tutorial-general": "node ./lib/server.js",
     "tutorial-entity-detection": "node ./lib/demos/tutorialEntityDetectionCallback.js",
     "tutorial-session-callbacks": "node ./lib/demos/tutorialSessionCallbacks.js",
     "tutorial-api-calls": "node ./lib/demos/tutorialAPICalls.js",
     "tutorial-hybrid": "node ./lib/demos/tutorialHybrid.js",
-    "wait-on": "wait-on",
-    "test-smoke": "node ./lib/test/smoke.js"
+    "wait-on": "wait-on"
   },
   "author": "Microsoft Conversation Learner Team",
   "license": "MIT",

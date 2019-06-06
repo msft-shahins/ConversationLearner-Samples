@@ -96,6 +96,15 @@ cl.EntityDetectionCallback(async (text: string, memoryManager: ClientMemoryManag
 //===================================
 // Define Pizza Related API Callbacks
 //===================================
+cl.AddCallback<number>({
+    name: "Add",
+    logic: async (memoryManager, arg1: string, arg2: string) => {
+        return [arg1, arg2]
+            .map(x => parseInt(x))
+            .reduce((sum, a) => sum += a, 0)
+    },
+    render: async result => `Add result is: ${result}`
+})
 
 cl.AddCallback({
     name: "OutOfStock",
