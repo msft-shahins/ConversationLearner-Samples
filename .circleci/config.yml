@@ -60,7 +60,7 @@ jobs:
       - run: npm run build
 
       # Clone the UI to access tests
-      - run: git clone https://github.com/microsoft/ConversationLearner-UI -b mattm/smoke-test ../ui
+      - run: git clone https://github.com/microsoft/ConversationLearner-UI ../ui
       - run: cd ../ui && npm ci
 
       # Run the sample
