@@ -62,11 +62,11 @@
             "defaultValue": null
         },
         "dockerRegistryStartupCommand": {
-            "type": "string"
+            "type": "string",
             "defaultValue": ""
         },
         "luisAuthoringKey" : {
-            "type": "string"
+            "type": "string",
             "defaultValue": ""
         }
     },
