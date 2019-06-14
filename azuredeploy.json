@@ -12,7 +12,7 @@
             "type": "string"
         },
         "hostingEnvironment": {
-            "type": "string"
+            "type": "string",
             "defaultValue": ""
         },
         "hostingPlanName": {
