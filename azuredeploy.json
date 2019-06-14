@@ -42,9 +42,7 @@
         }
     },
     "variables": {
-        "subscriptionId" : "[subscription().subscriptionId]",
-        "hostingPlanName" : "[parameters('name')]", 
-        "serverFarmResourceGroup": "[parameters('name')]"
+        "hostingPlanName" : "[parameters('name')]"
     },
     "resources": [
         {
@@ -77,7 +75,6 @@
                     "appCommandLine": "[parameters('dockerRegistryStartupCommand')]",
                     "alwaysOn": "[parameters('alwaysOn')]"
                 },
-                "serverFarmId": "[concat('/subscriptions/', variables('subscriptionId'),'/resourcegroups/', variables('serverFarmResourceGroup'), '/providers/Microsoft.Web/serverfarms/', variables('hostingPlanName'))]",
                 "hostingEnvironment": "",
                 "clientAffinityEnabled": false
             }
