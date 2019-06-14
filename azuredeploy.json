@@ -1,0 +1,130 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "subscriptionId": {
+            "type": "string"
+        },
+        "name": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "hostingEnvironment": {
+            "type": "string"
+            "defaultValue": ""
+        },
+        "hostingPlanName": {
+            "type": "string"
+        },
+        "serverFarmResourceGroup": {
+            "type": "string"
+        },
+        "alwaysOn": {
+            "type": "bool", 
+            "defaultValue": false
+        },
+        "sku": {
+            "type": "string",
+            "defaultValue": "Basic"
+        },
+        "skuCode": {
+            "type": "string",
+            "defaultValue": "B1"
+        },
+        "workerSize": {
+            "type": "string", 
+            "defaultValue": "0"
+        },
+        "workerSizeId": {
+            "type": "string", 
+            "defaultValue": "0"
+        },
+        "numberOfWorkers": {
+            "type": "string", 
+            "defaultValue": "1"
+        },
+        "linuxFxVersion": {
+            "type": "string",
+            "defaultValue": "DOCKER|docker.io/codily/cl-sample"
+        },
+        "dockerRegistryUrl": {
+            "type": "string",
+            "defaultValue": "https://docker.io"
+        },
+        "dockerRegistryUsername": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "dockerRegistryPassword": {
+            "type": "securestring",
+            "defaultValue": null
+        },
+        "dockerRegistryStartupCommand": {
+            "type": "string"
+            "defaultValue": ""
+        },
+        "luisAuthoringKey" : {
+            "type": "string"
+            "defaultValue": ""
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2018-02-01",
+            "name": "[parameters('name')]",
+            "type": "Microsoft.Web/sites",
+            "location": "[parameters('location')]",
+            "tags": {},
+            "dependsOn": [
+                "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]"
+            ],
+            "properties": {
+                "name": "[parameters('name')]",
+                "siteConfig": {
+                    "appSettings": [
+                        {
+                            "name": "LUIS_AUTHORING_KEY",
+                            "value": "[parameters('luisAuthoringKey')]"
+                        },
+                        {
+                            "name": "NODE_ENV",
+                            "value": "development"
+                        },
+                        {
+                            "name": "WEBSITES_PORT",
+                            "value": "3978"
+                        }
+                    ],
+                    "linuxFxVersion": "[parameters('linuxFxVersion')]",
+                    "appCommandLine": "[parameters('dockerRegistryStartupCommand')]",
+                    "alwaysOn": "[parameters('alwaysOn')]"
+                },
+                "serverFarmId": "[concat('/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', parameters('serverFarmResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
+                "hostingEnvironment": "[parameters('hostingEnvironment')]",
+                "clientAffinityEnabled": false
+            }
+        },
+        {
+            "apiVersion": "2018-02-01",
+            "name": "[parameters('hostingPlanName')]",
+            "type": "Microsoft.Web/serverfarms",
+            "location": "[parameters('location')]",
+            "kind": "linux",
+            "tags": {},
+            "properties": {
+                "name": "[parameters('hostingPlanName')]",
+                "workerSize": "[parameters('workerSize')]",
+                "workerSizeId": "[parameters('workerSizeId')]",
+                "numberOfWorkers": "[parameters('numberOfWorkers')]",
+                "reserved": true,
+                "hostingEnvironment": "[parameters('hostingEnvironment')]"
+            },
+            "sku": {
+                "Tier": "[parameters('sku')]",
+                "Name": "[parameters('skuCode')]"
+            }
+        }
+    ]
+}
