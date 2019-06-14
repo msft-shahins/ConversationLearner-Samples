@@ -1,114 +1,118 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "siteName": {
-            "type": "string"
-        },
-        "luisAuthoringKey" : {
-            "type": "string"
-        },
-        "siteLocation": {
-            "type": "string",
-            "defaultValue": "West US 2"
-        },
-        "alwaysOn": {
-            "type": "bool", 
-            "defaultValue": false
-        },
-        "sku": {
-            "type": "string",
-            "allowedValues": [
-                "Free",
-                "Shared",
-                "Basic",
-                "Standard"
-            ],
-            "defaultValue": "Basic"
-        },
-        "skuCode": {
-            "type": "string",
-            "defaultValue": "B1"
-        },
-        "workerSize": {
-            "type": "string",
-             "allowedValues": [
-            "0",
-            "1",
-            "2"
-            ], 
-            "defaultValue": "0"
-        },
-        "workerSizeId": {
-            "type": "string", 
-            "defaultValue": "0"
-        },
-        "numberOfWorkers": {
-            "type": "string", 
-            "defaultValue": "1"
-        },
-        "linuxFxVersion": {
-            "type": "string",
-            "defaultValue": "DOCKER|docker.io/codily/cl-sample"
-        }
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "siteName": {
+      "type": "string"
     },
-    "variables": {
-        "hostingPlanName" : "[parameters('siteName')]"
+    "luisAuthoringKey": {
+      "type": "string"
     },
-    "resources": [
-        {
-            "apiVersion": "2018-02-01",
-            "name": "[parameters('siteName')]",
-            "type": "Microsoft.Web/sites",
-            "location": "[parameters('siteLocation')]",
-            "tags": {},
-            "dependsOn": [
-                "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]"
-            ],
-            "properties": {
-                "name": "[parameters('siteName')]",
-                "siteConfig": {
-                    "appSettings": [
-                        {
-                            "name": "LUIS_AUTHORING_KEY",
-                            "value": "[parameters('luisAuthoringKey')]"
-                        },
-                        {
-                            "name": "NODE_ENV",
-                            "value": "development"
-                        },
-                        {
-                            "name": "WEBSITES_PORT",
-                            "value": "3978"
-                        }
-                    ],
-                    "linuxFxVersion": "[parameters('linuxFxVersion')]",
-                    "appCommandLine": "[parameters('dockerRegistryStartupCommand')]",
-                    "alwaysOn": "[parameters('alwaysOn')]"
-                },
-                "hostingEnvironment": "",
-                "clientAffinityEnabled": false
-            }
-        },
-        {
-            "apiVersion": "2018-02-01",
-            "name": "[variables('hostingPlanName')]",
-            "type": "Microsoft.Web/serverfarms",
-            "location": "[parameters('siteLocation')]",
-            "kind": "linux",
-            "tags": {},
-            "properties": {
-                "name": "[variables('hostingPlanName')]",
-                "workerSize": "[parameters('workerSize')]",
-                "workerSizeId": "[parameters('workerSizeId')]",
-                "numberOfWorkers": "[parameters('numberOfWorkers')]",
-                "reserved": true,
-                "hostingEnvironment": "[parameters('hostingEnvironment')]"
+    "siteLocation": {
+      "type": "string",
+      "defaultValue": "West US 2"
+    },
+    "alwaysOn": {
+      "type": "bool",
+      "defaultValue": false
+    },
+    "sku": {
+      "type": "string",
+      "allowedValues": [
+        "Free",
+        "Shared",
+        "Basic",
+        "Standard"
+      ],
+      "defaultValue": "Basic"
+    },
+    "skuCode": {
+      "type": "string",
+      "defaultValue": "B1"
+    },
+    "workerSize": {
+      "type": "string",
+      "allowedValues": [
+        "0",
+        "1",
+        "2"
+      ],
+      "defaultValue": "0"
+    },
+    "workerSizeId": {
+      "type": "string",
+      "defaultValue": "0"
+    },
+    "numberOfWorkers": {
+      "type": "string",
+      "defaultValue": "1"
+    },
+    "linuxFxVersion": {
+      "type": "string",
+      "defaultValue": "DOCKER|docker.io/codily/cl-sample"
+    }
+  },
+  "variables": {
+    "hostingPlanName": "[parameters('siteName')]"
+  },
+  "resources": [
+    {
+      "apiVersion": "2018-02-01",
+      "name": "[parameters('siteName')]",
+      "type": "Microsoft.Web/sites",
+      "location": "[parameters('siteLocation')]",
+      "tags": {
+        
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]"
+      ],
+      "properties": {
+        "name": "[parameters('siteName')]",
+        "siteConfig": {
+          "appSettings": [
+            {
+              "name": "LUIS_AUTHORING_KEY",
+              "value": "[parameters('luisAuthoringKey')]"
             },
-            "sku": {
-                "Tier": "[parameters('sku')]",
-                "Name": "[parameters('skuCode')]"
+            {
+              "name": "NODE_ENV",
+              "value": "development"
+            },
+            {
+              "name": "WEBSITES_PORT",
+              "value": "3978"
             }
-        }
-    ]
+          ],
+          "linuxFxVersion": "[parameters('linuxFxVersion')]",
+          "appCommandLine": "[parameters('dockerRegistryStartupCommand')]",
+          "alwaysOn": "[parameters('alwaysOn')]"
+        },
+        "hostingEnvironment": "",
+        "clientAffinityEnabled": false
+      }
+    },
+    {
+      "apiVersion": "2018-02-01",
+      "name": "[variables('hostingPlanName')]",
+      "type": "Microsoft.Web/serverfarms",
+      "location": "[parameters('siteLocation')]",
+      "kind": "linux",
+      "tags": {
+        
+      },
+      "properties": {
+        "name": "[variables('hostingPlanName')]",
+        "workerSize": "[parameters('workerSize')]",
+        "workerSizeId": "[parameters('workerSizeId')]",
+        "numberOfWorkers": "[parameters('numberOfWorkers')]",
+        "reserved": true,
+        "hostingEnvironment": ""
+      },
+      "sku": {
+        "Tier": "[parameters('sku')]",
+        "Name": "[parameters('skuCode')]"
+      }
+    }
+  ]
 }
