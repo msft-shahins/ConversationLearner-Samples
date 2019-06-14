@@ -88,7 +88,6 @@
           "appCommandLine": "[parameters('dockerRegistryStartupCommand')]",
           "alwaysOn": "[parameters('alwaysOn')]"
         },
-        "hostingEnvironment": "",
         "clientAffinityEnabled": false
       }
     },
