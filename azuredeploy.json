@@ -3,7 +3,8 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "subscriptionId": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "[subscription().subscriptionId]"
         },
         "name": {
             "type": "string"
@@ -48,22 +49,6 @@
         "linuxFxVersion": {
             "type": "string",
             "defaultValue": "DOCKER|docker.io/codily/cl-sample"
-        },
-        "dockerRegistryUrl": {
-            "type": "string",
-            "defaultValue": "https://docker.io"
-        },
-        "dockerRegistryUsername": {
-            "type": "string",
-            "defaultValue": ""
-        },
-        "dockerRegistryPassword": {
-            "type": "securestring",
-            "defaultValue": null
-        },
-        "dockerRegistryStartupCommand": {
-            "type": "string",
-            "defaultValue": ""
         },
         "luisAuthoringKey" : {
             "type": "string",
