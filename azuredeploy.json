@@ -2,25 +2,15 @@
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "subscriptionId": {
-            "type": "string",
-            "defaultValue": "[subscription().subscriptionId]"
-        },
         "name": {
             "type": "string"
         },
+        "luisAuthoringKey" : {
+            "type": "string"
+        },
         "location": {
-            "type": "string"
-        },
-        "hostingEnvironment": {
             "type": "string",
-            "defaultValue": ""
-        },
-        "hostingPlanName": {
-            "type": "string"
-        },
-        "serverFarmResourceGroup": {
-            "type": "string"
+            "defaultValue": "West US 2"
         },
         "alwaysOn": {
             "type": "bool", 
@@ -49,11 +39,12 @@
         "linuxFxVersion": {
             "type": "string",
             "defaultValue": "DOCKER|docker.io/codily/cl-sample"
-        },
-        "luisAuthoringKey" : {
-            "type": "string",
-            "defaultValue": ""
         }
+    },
+    "variables": {
+        "subscriptionId" : "[subscription().subscriptionId]",
+        "hostingPlanName" : "[parameters('name')]", 
+        "serverFarmResourceGroup": "[parameters('name')]"
     },
     "resources": [
         {
@@ -63,7 +54,7 @@
             "location": "[parameters('location')]",
             "tags": {},
             "dependsOn": [
-                "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]"
+                "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]"
             ],
             "properties": {
                 "name": "[parameters('name')]",
@@ -86,20 +77,20 @@
                     "appCommandLine": "[parameters('dockerRegistryStartupCommand')]",
                     "alwaysOn": "[parameters('alwaysOn')]"
                 },
-                "serverFarmId": "[concat('/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', parameters('serverFarmResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
-                "hostingEnvironment": "[parameters('hostingEnvironment')]",
+                "serverFarmId": "[concat('/subscriptions/', variables('subscriptionId'),'/resourcegroups/', variables('serverFarmResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
+                "hostingEnvironment": "",
                 "clientAffinityEnabled": false
             }
         },
         {
             "apiVersion": "2018-02-01",
-            "name": "[parameters('hostingPlanName')]",
+            "name": "[variables('hostingPlanName')]",
             "type": "Microsoft.Web/serverfarms",
             "location": "[parameters('location')]",
             "kind": "linux",
             "tags": {},
             "properties": {
-                "name": "[parameters('hostingPlanName')]",
+                "name": "[variables('hostingPlanName')]",
                 "workerSize": "[parameters('workerSize')]",
                 "workerSizeId": "[parameters('workerSizeId')]",
                 "numberOfWorkers": "[parameters('numberOfWorkers')]",
