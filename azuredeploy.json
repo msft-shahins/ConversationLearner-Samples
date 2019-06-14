@@ -10,7 +10,7 @@
     },
     "siteLocation": {
       "type": "string",
-      "defaultValue": "West US 2"
+      "defaultValue": "West US"
     },
     "alwaysOn": {
       "type": "bool",
