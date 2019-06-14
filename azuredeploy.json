@@ -85,7 +85,7 @@
             }
           ],
           "linuxFxVersion": "[parameters('linuxFxVersion')]",
-          "appCommandLine": "[parameters('dockerRegistryStartupCommand')]",
+          "appCommandLine": "",
           "alwaysOn": "[parameters('alwaysOn')]"
         },
         "clientAffinityEnabled": false
