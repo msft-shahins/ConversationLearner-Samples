@@ -49,7 +49,7 @@
     },
     "linuxFxVersion": {
       "type": "string",
-      "defaultValue": "DOCKER|docker.io/codily/cl-sample"
+      "defaultValue": "DOCKER|codily/cl-sample:latest"
     }
   },
   "variables": {
