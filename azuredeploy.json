@@ -86,7 +86,6 @@
             }
           ]
         },
-        "linuxFxVersion": "[parameters('linuxFxVersion')]",
         "appCommandLine": "",
         "alwaysOn": "[parameters('alwaysOn')]",
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
@@ -109,10 +108,42 @@
         "numberOfWorkers": "[parameters('numberOfWorkers')]",
         "perSiteScaling": false,
         "reserved": true,
+        
       },
       "sku": {
         "Tier": "[parameters('sku')]",
         "Name": "[parameters('skuCode')]"
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites/config",
+      "apiVersion": "2016-08-01",
+      "name": "[concat(parameters('siteName'), '/web')]",
+      "location": "West US",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('siteName'))]"
+      ],
+      "properties": {
+        "numberOfWorkers": 1,
+        "defaultDocuments": [
+          "Default.htm",
+          "Default.html",
+          "Default.asp",
+          "index.htm",
+          "index.html",
+          "iisstart.htm",
+          "default.aspx",
+          "index.php",
+          "hostingstart.html"
+        ],
+        "netFrameworkVersion": "v4.0",
+        "phpVersion": "",
+        "pythonVersion": "",
+        "nodeVersion": "",
+        "linuxFxVersion": "[parameters('linuxFxVersion')]",
+        "http20Enabled": false,
+        "minTlsVersion": "1.2",
+        
       }
     }
   ]
