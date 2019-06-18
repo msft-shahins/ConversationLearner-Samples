@@ -61,11 +61,12 @@
       "name": "[parameters('siteName')]",
       "type": "Microsoft.Web/sites",
       "location": "[parameters('siteLocation')]",
+      "kind": "app,linux,container",
       "tags": {
         
       },
       "dependsOn": [
-        "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]"
+        "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]"
       ],
       "properties": {
         "name": "[parameters('siteName')]",
@@ -86,7 +87,8 @@
           ],
           "linuxFxVersion": "[parameters('linuxFxVersion')]",
           "appCommandLine": "",
-          "alwaysOn": "[parameters('alwaysOn')]"
+          "alwaysOn": "[parameters('alwaysOn')]",
+          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
         },
         "clientAffinityEnabled": false
       }
@@ -105,8 +107,8 @@
         "workerSize": "[parameters('workerSize')]",
         "workerSizeId": "[parameters('workerSizeId')]",
         "numberOfWorkers": "[parameters('numberOfWorkers')]",
+        "perSiteScaling": false,
         "reserved": true,
-        "hostingEnvironment": ""
       },
       "sku": {
         "Tier": "[parameters('sku')]",
