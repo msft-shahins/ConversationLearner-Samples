@@ -84,12 +84,12 @@
               "name": "WEBSITES_PORT",
               "value": "3978"
             }
-          ],
-          "linuxFxVersion": "[parameters('linuxFxVersion')]",
-          "appCommandLine": "",
-          "alwaysOn": "[parameters('alwaysOn')]",
-          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
+          ]
         },
+        "linuxFxVersion": "[parameters('linuxFxVersion')]",
+        "appCommandLine": "",
+        "alwaysOn": "[parameters('alwaysOn')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
         "clientAffinityEnabled": false
       }
     },
