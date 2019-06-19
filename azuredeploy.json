@@ -12,7 +12,7 @@
       "type": "string",
       "defaultValue": "West US"
     },
-    "cl-docker-container": {
+    "conversationLearnerDockerContainer": {
       "type": "string",
       "defaultValue": "DOCKER|codily/cl-sample:latest"
     },
@@ -106,7 +106,7 @@
         "phpVersion": "",
         "pythonVersion": "",
         "nodeVersion": "",
-        "linuxFxVersion": "[parameters('cl-docker-container')]",
+        "linuxFxVersion": "[parameters('conversationLearnerDockerContainer')]",
         "http20Enabled": false,
         "minTlsVersion": "1.2",
         
